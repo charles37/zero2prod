@@ -16,15 +16,49 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    # Setup Rust toolchain
+    - name: Install Rust toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        override: true
+
+    # Install cargo-tarpaulin for code coverage
+    - name: Install cargo-tarpaulin
+      uses: actions-rs/tarpaulin@v0.1
+
+    # Install cargo-clippy for linting
+    - name: Install clippy
+      run: rustup component add clippy
+
+    # cargo fmt does not need to be installed as it comes with the rustup toolchain
+
+    # Install cargo-audit for security audit
+    - name: Install cargo-audit
+      run: cargo install cargo-audit
+
+    # Build
     - name: Build
       run: cargo build --verbose
+
+    # Run tests
     - name: Run tests
       run: cargo test --verbose
+
+    # Code Coverage
     - name: Code Coverage
       run: cargo tarpaulin --ignore-tests
+
+    # Code Linter
     - name: Code Linter
       run: cargo clippy -- -D warnings
+
+    # Code formatter
     - name: Code formatter
       run: cargo fmt -- --check
-    - name: Securiy audit
+
+    # Security audit
+    - name: Security audit
       run: cargo audit
