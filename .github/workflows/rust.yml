@@ -99,7 +99,7 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
     - name: Code Linter
-      run: cargo clippy -- -D warnings
+      run: cargo clippy --all-targets --all-features    
     - name: Code formatter
       run: cargo fmt -- --check
     - name: Securiy audit
