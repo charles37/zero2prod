@@ -74,6 +74,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-Dwarnings"
 
 jobs:
   build:
@@ -82,17 +83,17 @@ jobs:
 
     steps:
 
-    # Install cargo-clippy for linting
-    - name: Install clippy
-      run: rustup component add clippy
+    # # Install cargo-clippy for linting
+    # - name: Install clippy
+    #   run: rustup component add clippy
 
-    # cargo fmt does not need to be installed as it comes with the rustup toolchain
+    # # cargo fmt does not need to be installed as it comes with the rustup toolchain
 
-    # Install cargo-audit for security audit
-    - name: Install cargo-audit
-      run: cargo install cargo-audit
+    # # Install cargo-audit for security audit
+    # - name: Install cargo-audit
+    #   run: cargo install cargo-audit
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build
       run: cargo build --verbose
     - name: Run tests
