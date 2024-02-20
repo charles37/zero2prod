@@ -27,7 +27,7 @@ jobs:
 
     # Install cargo-tarpaulin for code coverage
     - name: Install cargo-tarpaulin
-      uses: actions-rs/tarpaulin@v0.1
+      uses: cargo install cargo-tarpaulin
 
     # Install cargo-clippy for linting
     - name: Install clippy
