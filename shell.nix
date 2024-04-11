@@ -3,7 +3,9 @@
     buildInputs = with pkgs; [
       clang
       # Replace llvmPackages with llvmPackages_X, where X is the latest LLVM version (at the time of writing, 16)
-      llvmPackages.bintools
+      cargo
+      rustc
+      llvmPackages_16.bintools
       rustup
       pkg-config
       openssl
