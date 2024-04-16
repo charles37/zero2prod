@@ -7,6 +7,7 @@
       rustc
       llvmPackages_16.bintools
       rustup
+      rustfmt
       pkg-config
       openssl
     ];
