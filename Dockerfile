@@ -1,19 +1,16 @@
-FROM nixos/nix:latest
-
-# Copy the flake files
-COPY flake.nix flake.lock ./
-
-# Build the Rust binary
-RUN nix build --experimental-features 'nix-command flakes' 
-
-# Create a new stage with a minimal base image
-FROM debian:buster-slim
-
-# Copy the Rust binary from the Nix store
-COPY --from=0 /nix/store/*-zero2prod-0.1.0/bin/zero2prod /app/zero2prod
-
-# Set the working directory
+# We use the latest Rust stable release as base image
+FROM rust:latest
+# Let's switch our working directory to `app` (equivalent to `cd app`)
+# The `app` folder will be created for us by Docker in case it does not
+# exist already.
 WORKDIR /app
+# Install the required system dependencies for our linking configuration
+RUN apt update && apt install lld clang -y
 
-# Set the entry point to the Rust binary
-ENTRYPOINT ["/app/zero2prod"]
+# Copy all files from our working environment to our Docker image
+COPY . .
+# Let's build our binary!
+# We'll use the release profile to make it faaaast
+RUN cargo build --release
+# When `docker run` is executed, launch the binary!
+ENTRYPOINT ["./target/release/zero2prod"]
