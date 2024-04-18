@@ -50,3 +50,11 @@ pub async fn insert_subscriber(pool: &PgPool, form: &FormData) -> Result<(), sql
     })?;
     Ok(())
 }
+
+pub fn is_valid_name(s: &str) -> bool {
+    let is_empty_or_whitespace = s.trim().is_empty();
+    "test"
+
+
+
+}
