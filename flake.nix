@@ -49,6 +49,7 @@
             pkgs.openssl
             pkgs.pkg-config
             pkgs.sqlx-cli
+            pkgs.bunyan-rs
           ];
         };
       }
