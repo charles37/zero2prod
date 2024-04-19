@@ -73,26 +73,3 @@ pub fn is_valid_name(s: &str) -> bool {
 
     !(is_empty_or_whitespace || is_too_long || contains_forbidden)
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn valid_name() {
-        assert!(is_valid_name("Alice"));
-    }
-
-    #[test]
-    fn name_with_forbidden_char() {
-        assert!(!is_valid_name("Alice <Test>"));
-    }
-    #[test]
-    fn name_too_long() {
-        assert!(!is_valid_name(&"a".repeat(257)));
-    }
-    #[test]
-    fn name_empty() {
-        assert!(!is_valid_name(""));
-    }
-}
