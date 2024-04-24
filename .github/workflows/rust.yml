@@ -13,6 +13,9 @@ on:
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgres://username:password@localhost/dbname
+      SQLX_OFFLINE: true
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
@@ -35,6 +38,7 @@ jobs:
 
       - name: Lint with clippy
         run: cargo clippy -- -D warnings
+
 
 
 
