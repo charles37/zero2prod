@@ -53,16 +53,16 @@ done
 
 
 # Alter the template1 database to refresh the collation version
->&2 echo "Updating collation version of template1 database..."
-psql -h "${DB_HOST}" -U "${DB_USER}" -p "${DB_PORT}" -d "template1" <<-EOSQL
-  ALTER DATABASE template1 REFRESH COLLATION VERSION;
-EOSQL
+#>&2 echo "Updating collation version of template1 database..."
+#psql -h "${DB_HOST}" -U "${DB_USER}" -p "${DB_PORT}" -d "template1" <<-EOSQL
+#  ALTER DATABASE template1 REFRESH COLLATION VERSION;
+#EOSQL
 
 # Update collation version of the postgres database (if needed)
->&2 echo "Updating collation version of postgres database..."
-psql -h "${DB_HOST}" -U "${DB_USER}" -p "${DB_PORT}" -d "postgres" <<-EOSQL
-  ALTER DATABASE postgres REFRESH COLLATION VERSION;
-EOSQL
+#>&2 echo "Updating collation version of postgres database..."
+#psql -h "${DB_HOST}" -U "${DB_USER}" -p "${DB_PORT}" -d "postgres" <<-EOSQL
+#  ALTER DATABASE postgres REFRESH COLLATION VERSION;
+#EOSQL
 
 
 >&2 echo "Running migrations..."
