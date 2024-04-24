@@ -59,6 +59,8 @@ jobs:
 
       - name: Run tests
         run: cargo test
+        env:
+          SQLX_OFFLINE: true
 
   fmt:
     name: Rustfmt
