@@ -23,16 +23,18 @@ pub struct FormData {
     )
 )]
 pub async fn subscribe(form: web::Form<FormData>, pool: web::Data<PgPool>) -> HttpResponse {
+    let name = match SubscriberName::parse(form.0.name) {
+        Ok(name) => name,
+        Err(_) => return HttpResponse::BadRequest().finish(),
+    };
     let new_subscriber = NewSubscriber {
         email: form.0.email,
-        name: SubscriberName::parse(form.0.name).expect("Name validation failed"),
+        name,
     };
+
     match insert_subscriber(&pool, &new_subscriber).await {
         Ok(_) => HttpResponse::Ok().finish(),
-        Err(e) => {
-            tracing::error!("Failed to execute query: {:?}", e);
-            HttpResponse::InternalServerError().finish()
-        }
+        Err(_) => HttpResponse::InternalServerError().finish(),
     }
 }
 
@@ -72,4 +74,32 @@ pub fn is_valid_name(s: &str) -> bool {
     let contains_forbidden = s.chars().any(|g| forbidden_chars.contains(&g));
 
     !(is_empty_or_whitespace || is_too_long || contains_forbidden)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    //#[test]
+    //fn dummy_fail() {
+    //    let result: Result<&str, &str> = Err("The app crashed due to an IO error");
+    //    claims::assert_ok!(result);
+    //}
+    #[test]
+    fn valid_name() {
+        assert!(is_valid_name("Alice"));
+    }
+
+    #[test]
+    fn name_with_forbidden_char() {
+        assert!(!is_valid_name("Alice <Test>"));
+    }
+    #[test]
+    fn name_too_long() {
+        assert!(!is_valid_name(&"a".repeat(257)));
+    }
+    #[test]
+    fn name_empty() {
+        assert!(!is_valid_name(""));
+    }
 }
