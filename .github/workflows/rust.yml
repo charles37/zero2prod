@@ -49,7 +49,7 @@ jobs:
       - name: Check sqlx-data.json is up-to-date
         run: |
           export DATABASE_URL=postgres://postgres:password@localhost:5433/newsletter
-          cargo sqlx prepare --workspace --check --database-url $DATABASE_URL
+          cargo sqlx prepare -- --all-targets --all-features --check
         env:
           CARGO_TERM_COLOR: always
           SQLX_VERSION: 0.7.1
