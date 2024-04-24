@@ -13,6 +13,7 @@ name = "zero2prod"
 
 [dev-dependencies]
 once_cell = "1"
+fake = "~2.3"
 
 [dependencies]
 actix-web = "4"

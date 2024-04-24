@@ -1,9 +1,11 @@
 use validator::validate_email;
 
 #[derive(Debug)]
+#[allow(dead_code)]
 struct SubscriberEmail(String);
 
 impl SubscriberEmail {
+    #[allow(dead_code)]
     pub fn parse(s: String) -> Result<SubscriberEmail, String> {
         if validate_email(&s) {
             Ok(Self(s))
@@ -23,6 +25,8 @@ impl AsRef<str> for SubscriberEmail {
 mod tests {
     use super::SubscriberEmail;
     use claims::assert_err;
+    use fake::faker::internet::en::SafeEmail;
+    use fake::Fake;
 
     #[test]
     fn empty_string_is_rejected() {
@@ -40,5 +44,11 @@ mod tests {
     fn email_missing_subject_is_rejected() {
         let email = "@domain.com".to_string();
         assert_err!(SubscriberEmail::parse(email));
+    }
+
+    #[test]
+    fn valid_emails_are_parsed_successfully() {
+        let email = SafeEmail().fake();
+        claims::assert_ok!(SubscriberEmail::parse(email));
     }
 }
