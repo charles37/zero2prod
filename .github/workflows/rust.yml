@@ -48,15 +48,7 @@ jobs:
           SKIP_DOCKER=true ./scripts/init_db.sh
       - name: Check sqlx-data.json is up-to-date
         run: |
-          export DATABASE_URL=postgres://postgres:password@localhost:5433/newsletter
-          cargo sqlx prepare --check
-        env:
-          CARGO_TERM_COLOR: always
-          SQLX_VERSION: 0.7.1
-          SQLX_FEATURES: "rustls,postgres"
-          CARGO_INCREMENTAL: 0
-          CACHE_ON_FAILURE: false
-
+          cargo sqlx prepare --workspace --check
       - name: Run tests
         run: cargo test
 
