@@ -33,7 +33,6 @@
         packages.default = pkgs.rustPlatform.buildRustPackage {
           preConfigure = ''
             export RUST_LOG=debug
-            export SQLX_OFFLINE=true
           '';
           pname = "zero2prod";
           version = "0.1.0";
