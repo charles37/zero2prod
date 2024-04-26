@@ -14,6 +14,7 @@ async fn main() -> Result<(), std::io::Error> {
 
     let configuration = get_configuration().expect("Failed to read configuration.");
     let connection_pool = PgPoolOptions::new().connect_lazy_with(configuration.database.with_db());
+    let timeout = configuration.email_client.timeout();
 
     let sender_email = configuration
         .email_client
@@ -24,6 +25,7 @@ async fn main() -> Result<(), std::io::Error> {
         configuration.email_client.base_url,
         sender_email,
         configuration.email_client.authorization_token,
+        timeout,
     );
 
     let address = format!(
