@@ -24,12 +24,6 @@ impl TryFrom<FormData> for NewSubscriber {
     }
 }
 
-//pub fn parse_subscriber(form: FormData) -> Result<NewSubscriber, String> {
-//    let name = SubscriberName::parse(form.name)?;
-//    let email = SubscriberEmail::parse(form.email)?;
-//    Ok(NewSubscriber { email, name })
-//}
-
 #[tracing::instrument(
     name = "Adding a new subscriber",
     skip(form, pool),
